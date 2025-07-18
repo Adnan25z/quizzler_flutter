@@ -35,7 +35,7 @@ class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
 
 
-  int questionNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionBank[questionNumber].questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -73,16 +73,16 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                bool correctAnswer = quizBrain.getQuestionAns();
                 // The user picked true.
+                if(correctAnswer == true){
+                  print('user got it right');
+                }
+                else{
+                  print('wrong');
+                }
                 setState(() {
-                  bool correctAnswer = quizBrain.questionBank[questionNumber].questionAnswer;
-                  if(correctAnswer == true){
-                    print('user got it right');
-                  }
-                  else{
-                    print('wrong');
-                  }
-                  questionNumber+=1;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -104,15 +104,15 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 // The user picked false.
+                bool correctAnswer = quizBrain.getQuestionAns();
+                if(correctAnswer == false){
+                  print('user got it right');
+                }
+                else{
+                  print('wrong');
+                }
                 setState(() {
-                  bool correctAnswer = quizBrain.questionBank[questionNumber].questionAnswer;
-                  if(correctAnswer == false){
-                    print('user got it right');
-                  }
-                  else{
-                    print('wrong');
-                  }
-                  questionNumber+=1;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
